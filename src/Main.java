@@ -15,7 +15,9 @@ public class Main {
 
         byte[] buffer = new byte[1024];
 
-        while (true) {
+        System.out.println(System.in.read());
+
+        while (System.in.read() == 0) {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             socket.receive(packet);
 
@@ -31,5 +33,7 @@ public class Main {
             System.out.println("Von " + from + ": " + payload);
 
         }
+        socket.close();
+        System.out.println("UDP Server gestoppt");
     }
 }
