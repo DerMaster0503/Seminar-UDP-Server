@@ -2,6 +2,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 public class Main {
 
@@ -11,13 +12,15 @@ public class Main {
         DatagramSocket socket = new DatagramSocket(null);
         socket.bind(new InetSocketAddress("::", port));
 
-        System.out.println("UDP Server lauscht auf Port " + port);
+        System.out.println("UDP Server listening to Port " + port);
+
+        SQL sql = new SQL("sensor_user", "sensor_pass");
 
         byte[] buffer = new byte[1024];
 
-        System.out.println(System.in.read());
+        Scanner scanner = new Scanner(System.in);
 
-        while (System.in.read() == 0) {
+        while (!scanner.hasNext()) {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             socket.receive(packet);
 
@@ -30,10 +33,15 @@ public class Main {
 
             String from = packet.getAddress().getHostAddress();
 
-            System.out.println("Von " + from + ": " + payload);
-
+            System.out.println("From " + from + ": " + payload);
         }
+        System.out.println("Scanner reading: "+scanner.next());
+        System.out.println("Stopping Services");
+        sql.close();
+        System.out.println("Stopping UDP Server");
         socket.close();
-        System.out.println("UDP Server gestoppt");
+        System.out.println("UDP Server stopped");
     }
 }
+
+
