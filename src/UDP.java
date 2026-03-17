@@ -21,7 +21,7 @@ public class UDP extends Thread {
         super.run();
         System.out.println("Started Thread");
         byte[] buffer = new byte[1024];
-        while (!socket.isClosed()){
+        while (!Thread.currentThread().isInterrupted()){
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
                 socket.receive(packet);
@@ -45,12 +45,13 @@ public class UDP extends Thread {
 
     public void startServer() throws SocketException {
         System.out.println("Starting Server on "+port);
-        socket = new DatagramSocket(null);
-        socket.bind(new InetSocketAddress("::", port));
-        System.out.println("UDP Server listening to Port " + port);
+        socket = new DatagramSocket(new InetSocketAddress("::", port));
+        //socket.bind(new InetSocketAddress("::", port));
+        System.out.println("UDP Server listening to  "+socket.getLocalAddress() + ":" + port);
     }
 
     public void close(){
+        this.interrupt();
         System.out.println("Stopping UDP Server");
         socket.close();
         System.out.println("UDP Server stopped");

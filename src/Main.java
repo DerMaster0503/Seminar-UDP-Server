@@ -14,6 +14,8 @@ public class Main {
 
         UDP udp = new UDP(12345);
 
+        udp.start();
+
         Scanner scanner = new Scanner(System.in);
         while (!scanner.hasNext()) {}
 
