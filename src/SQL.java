@@ -12,7 +12,7 @@ public class SQL {
     public SQL(String username, String password) throws SQLException, ClassNotFoundException {
         System.out.println("SQL Connecting.... ");
         Class.forName("org.postgresql.Driver");
-        con = DriverManager.getConnection("jdbc:postgresql://192.168.50.2:5432/sensors", username, password);
+        con = DriverManager.getConnection("jdbc:postgresql://192.168.137.2:5432/sensors", username, password);
         System.out.println("SQL Connected");
         rooms = new ArrayList<>();
         this.init_rooms();
@@ -25,6 +25,7 @@ public class SQL {
         while (resultSet.next()){
             rooms.add(new room(resultSet.getInt("id"), resultSet.getString("name")));
         }
+        System.out.println("Found "+rooms.size()+" rooms");
         System.out.println("Initialising completed");
         statement.close();
     }
@@ -41,6 +42,7 @@ public class SQL {
         con.close();
         System.out.println("SQL stopped");
     }
+
+    record room(int id, String name){}
 }
 
-record room(int id, String name){}
