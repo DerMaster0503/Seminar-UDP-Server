@@ -9,8 +9,9 @@ public class SQL {
     ArrayList<room> rooms;
 
 
-    public SQL(String username, String password) throws SQLException {
+    public SQL(String username, String password) throws SQLException, ClassNotFoundException {
         System.out.println("SQL Connecting.... ");
+        Class.forName("org.postgresql.Driver");
         con = DriverManager.getConnection("jdbc:postgresql://192.168.50.2:5432/sensors", username, password);
         System.out.println("SQL Connected");
         rooms = new ArrayList<>();
