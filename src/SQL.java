@@ -12,7 +12,7 @@ public class SQL {
     public SQL(String username, String password) throws SQLException, ClassNotFoundException {
         System.out.println("SQL Connecting.... ");
         Class.forName("org.postgresql.Driver");
-        con = DriverManager.getConnection("jdbc:postgresql://192.168.137.2:5432/sensors", username, password);
+            con = DriverManager.getConnection("jdbc:postgresql://192.168.50.2:5432/sensors", username, password);
         System.out.println("SQL Connected");
         rooms = new ArrayList<>();
         this.init_rooms();
@@ -32,7 +32,8 @@ public class SQL {
 
     public void addReadings(int id, String type, int value) throws SQLException {
         statement = con.createStatement();
-        statement.execute("INSERT INTO sensor_readings (room_id, sensor_type, value, time) VALUES ("+id+", "+type+", "+value+", "+System.currentTimeMillis()+")");
+        System.out.println("INSERT INTO sensor_readings (room_id, sensor_type, value) VALUES ("+id+", '"+type+"', "+value+")");
+        statement.execute("INSERT INTO sensor_readings (room_id, sensor_type, value) VALUES ("+id+", '"+type+"', "+value+")");
         statement.close();
     }
 

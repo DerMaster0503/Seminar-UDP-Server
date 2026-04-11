@@ -3,6 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Seminar___UDP_Server_jar</output-path>
     <root id="archive" name="Seminar - UDP Server.jar">
       <element id="module-output" name="Seminar - UDP Server" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/postgresql-42.7.10.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

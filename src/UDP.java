@@ -4,15 +4,18 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class UDP extends Thread {
 
     int port;
     DatagramSocket socket;
+    SQL sql;
 
-    public UDP(int port) throws SocketException {
+    public UDP(int port, SQL sql) throws SocketException {
         this.port = port;
+        this.sql = sql;
         startServer();
     }
 
@@ -38,7 +41,25 @@ public class UDP extends Thread {
 
             String from = packet.getAddress().getHostAddress();
 
+            if  (payload.startsWith("save")){
+                String[] strings = payload.split(" ");
+                try {
+                    sql.addReadings(Integer.parseInt(strings[1]), strings[2], Integer.parseInt(strings[3]));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            // save room_id measure_type value
             System.out.println("From " + from + ": " + payload);
+
+            if (payload.contains("exit")) {
+                try {
+                    Main.stopServices();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
         }
         System.out.println("Stopped Thread");
     }

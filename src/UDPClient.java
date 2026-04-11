@@ -8,7 +8,7 @@ public class UDPClient {
     public static void main(String[] args) throws Exception {
         BufferedReader user_in = new BufferedReader(new InputStreamReader(System.in));
         DatagramSocket socket = new DatagramSocket();
-        InetAddress IP = InetAddress.getByName("127.0.0.1");
+        InetAddress IP = InetAddress.getByName("192.168.137.2");
 
         System.out.print("Enter Data to send to server: ");
         String message = user_in.readLine();
